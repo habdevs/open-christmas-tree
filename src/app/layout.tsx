@@ -6,18 +6,15 @@ import {
   getDefaultWallets, RainbowKitProvider,
 } from '@rainbow-me/rainbowkit'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
-import {
-  mainnet, polygon, optimism, arbitrum, base, zora,
-} from 'wagmi/chains'
+import { polygon } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, publicClient } = configureChains(
-  [mainnet, polygon, optimism, arbitrum, base, zora], [
-    alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY }), publicProvider()])
+const { chains, publicClient } = configureChains([polygon], [
+  alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY! })])
 
 const { connectors } = getDefaultWallets({
-  appName: 'My RainbowKit App', projectId: 'YOUR_PROJECT_ID', chains,
+  appName: 'My Christmas Tree', chains, projectId: '',
 })
 
 const wagmiConfig = createConfig({
@@ -36,14 +33,14 @@ export default function RootLayout ({
   children: React.ReactNode
 }) {
   return (<html lang="en">
-    <body className={inter.className}>
-    {/*<PROVIDER.ADD>*/}
-    <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains}>
-        {children}
-        {/*</PROVIDER.ADD>*/}
-      </RainbowKitProvider>
-    </WagmiConfig>
-    </body>
-    </html>)
+  <body className={inter.className}>
+  {/*<PROVIDER.ADD>*/}
+  <WagmiConfig config={wagmiConfig}>
+    <RainbowKitProvider chains={chains}>
+      {children}
+      {/*</PROVIDER.ADD>*/}
+    </RainbowKitProvider>
+  </WagmiConfig>
+  </body>
+  </html>)
 }
